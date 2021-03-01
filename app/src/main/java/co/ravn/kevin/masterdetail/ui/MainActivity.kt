@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import co.ravn.kevin.masterdetail.R
 import co.ravn.kevin.masterdetail.databinding.ActivityMainBinding
@@ -19,11 +20,17 @@ class MainActivity : AppCompatActivity() {
     }
     private val navController get() = navHostFragment.navController
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.posts_fragment))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.posts_fragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
