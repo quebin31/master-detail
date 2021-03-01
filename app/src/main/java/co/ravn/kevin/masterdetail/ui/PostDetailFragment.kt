@@ -16,8 +16,6 @@ class PostDetailFragment : Fragment() {
     private var _binding: FragmentPostDetailBinding? = null
     private val binding get() = _binding!!
 
-    @Inject lateinit var api: Api
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
