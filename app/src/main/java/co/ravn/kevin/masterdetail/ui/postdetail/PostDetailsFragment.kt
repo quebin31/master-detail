@@ -1,4 +1,4 @@
-package co.ravn.kevin.masterdetail.ui.posts
+package co.ravn.kevin.masterdetail.ui.postdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.ravn.kevin.masterdetail.databinding.FragmentPostsBinding
-import co.ravn.kevin.masterdetail.model.Post
+import co.ravn.kevin.masterdetail.databinding.FragmentPostDetailsBinding
 import co.ravn.kevin.masterdetail.model.Result
 import co.ravn.kevin.masterdetail.utils.gone
 import co.ravn.kevin.masterdetail.utils.toast
@@ -19,21 +18,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PostsFragment : Fragment() {
+class PostDetailsFragment : Fragment() {
 
-    private var _binding: FragmentPostsBinding? = null
+    private var _binding: FragmentPostDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<PostsViewModel>()
+    private val args by navArgs<PostDetailsFragmentArgs>()
+    private val viewModel by viewModels<PostDetailsViewModel>()
 
-    private val adapter by lazy {
-        PostAdapter { navigateToPostDetails(it) }
-    }
+    private val adapter by lazy { CommentAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPostsBinding.inflate(inflater, container, false)
+        _binding = FragmentPostDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,41 +40,39 @@ class PostsFragment : Fragment() {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
-        postsList.adapter = adapter
-        postsList.layoutManager = LinearLayoutManager(requireContext())
-        getAllPosts()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.commentsList.adapter = adapter
+        binding.commentsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.commentsList.isNestedScrollingEnabled = false
+        getPostDetails(args.postId)
     }
 
-    private fun getAllPosts() {
+    private fun getPostDetails(postId: Int) {
         binding.noData.gone()
         binding.progress.visible()
 
         lifecycleScope.launch {
-            val result = viewModel.getPosts()
+            val result = viewModel.getPostDetails(postId)
             binding.progress.gone()
 
             when (result) {
                 is Result.Ok -> {
-                    val posts = result.value
-                    if (posts.isEmpty()) {
+                    val postDetails = result.value
+                    binding.title.text = postDetails.post.title
+                    binding.body.text = postDetails.post.body
+
+                    if (postDetails.comments.isEmpty()) {
                         binding.noData.visible()
                     } else {
-                        adapter.updateData(posts)
+                        adapter.updateData(postDetails.comments)
                     }
                 }
 
                 is Result.Err<*> -> {
                     binding.noData.visible()
-                    context?.toast("Failed to get posts")
+                    context?.toast("Failed to get comments")
                 }
             }
         }
     }
-
-    private fun navigateToPostDetails(post: Post) {
-        val directions = PostsFragmentDirections.actionShowPostDetails(post.id)
-        findNavController().navigate(directions)
-    }
-
 }

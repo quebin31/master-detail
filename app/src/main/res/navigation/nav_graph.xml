@@ -11,18 +11,18 @@
         android:label="@string/posts"
         tools:layout="@layout/fragment_posts" >
         <action
-            android:id="@+id/action_show_post_detail"
-            app:destination="@id/post_detail_fragment"
+            android:id="@+id/action_show_post_details"
+            app:destination="@id/post_details_fragment"
             app:enterAnim="@anim/fragment_fade_enter"
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/post_detail_fragment"
-        android:name="co.ravn.kevin.masterdetail.ui.postdetail.PostDetailFragment"
+        android:id="@+id/post_details_fragment"
+        android:name="co.ravn.kevin.masterdetail.ui.postdetail.PostDetailsFragment"
         android:label="@string/post_detail"
-        tools:layout="@layout/fragment_post_detail" >
+        tools:layout="@layout/fragment_post_details" >
         <argument
             android:name="post_id"
             app:argType="integer" />
