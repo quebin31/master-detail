@@ -70,6 +70,8 @@
             app:layout_constraintTop_toBottomOf="@id/main_barrier"
             tools:listitem="@layout/list_item_comment" />
 
+        <!-- The following ProgressBar and TextView will be centered
+             below the barrier when the recycler view is empty -->
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
