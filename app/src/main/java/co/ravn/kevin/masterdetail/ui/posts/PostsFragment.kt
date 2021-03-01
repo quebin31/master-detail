@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.ravn.kevin.masterdetail.databinding.FragmentPostsBinding
 import co.ravn.kevin.masterdetail.model.Post
@@ -25,9 +26,7 @@ class PostsFragment : Fragment() {
     private val viewModel by viewModels<PostsViewModel>()
 
     private val adapter by lazy {
-        PostAdapter {
-            TODO("Navigate to post details")
-        }
+        PostAdapter { navigateToPostDetails(it) }
     }
 
     override fun onCreateView(
@@ -44,8 +43,8 @@ class PostsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
-        postsList.layoutManager = LinearLayoutManager(requireContext())
         postsList.adapter = adapter
+        postsList.layoutManager = LinearLayoutManager(requireContext())
         getAllPosts()
     }
 
@@ -73,6 +72,11 @@ class PostsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun navigateToPostDetails(post: Post) {
+        val directions = PostsFragmentDirections.actionShowPostDetail(post.id)
+        findNavController().navigate(directions)
     }
 
 }
