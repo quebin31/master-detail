@@ -35,6 +35,9 @@ class PostViewHolder(private val binding: ListItemPostBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post, onClick: ClickListener) {
+        itemView.setOnClickListener { onClick(post) }
 
+        binding.title.text = post.title
+        binding.body.text = post.body
     }
 }
