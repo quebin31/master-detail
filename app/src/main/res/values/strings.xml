@@ -3,4 +3,7 @@
     <string name="posts">Posts</string>
     <string name="post_detail">Post detail</string>
     <string name="comments">Comments</string>
+    <string name="no_available_posts">No available posts</string>
+    <string name="no_available_comments">No available comments</string>
+    <string name="loading">Loading…</string>
 </resources>
