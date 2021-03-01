@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import co.ravn.kevin.masterdetail.R
 import co.ravn.kevin.masterdetail.databinding.FragmentPostsBinding
 import co.ravn.kevin.masterdetail.model.Post
 import co.ravn.kevin.masterdetail.model.Result
+import co.ravn.kevin.masterdetail.ui.utils.SpacingItemDecorator
 import co.ravn.kevin.masterdetail.utils.gone
 import co.ravn.kevin.masterdetail.utils.toast
 import co.ravn.kevin.masterdetail.utils.visible
@@ -45,6 +47,8 @@ class PostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         postsList.adapter = adapter
         postsList.layoutManager = LinearLayoutManager(requireContext())
+        val spacing = requireContext().resources.getDimensionPixelSize(R.dimen.padding_standard)
+        postsList.addItemDecoration(SpacingItemDecorator(spacing))
         getAllPosts()
     }
 
