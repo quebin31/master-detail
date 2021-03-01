@@ -7,8 +7,8 @@ class Api(private val service: ApiService) {
         service.getPosts()
     }
 
-    suspend fun getPostDetails(postId: String): Result<PostDetails> = runToResult {
-        val post = service.getPost(postId)
+    suspend fun getPostDetails(postId: Int): Result<PostDetails> = runToResult {
+        val post = service.getPost(postId)[0]
         val comments = service.getComments(postId)
         PostDetails(post, comments)
     }

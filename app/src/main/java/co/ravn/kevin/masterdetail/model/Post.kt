@@ -1,3 +1,3 @@
 package co.ravn.kevin.masterdetail.model
 
-data class Post(val id: String, val title: String, val body: String)
+data class Post(val id: Int, val title: String, val body: String)
