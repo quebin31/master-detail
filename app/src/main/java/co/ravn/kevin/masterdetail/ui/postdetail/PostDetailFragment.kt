@@ -1,4 +1,4 @@
-package co.ravn.kevin.masterdetail.ui
+package co.ravn.kevin.masterdetail.ui.postdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater

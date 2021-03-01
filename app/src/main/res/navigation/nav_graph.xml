@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/post_detail_fragment"
-        android:name="co.ravn.kevin.masterdetail.ui.PostDetailFragment"
+        android:name="co.ravn.kevin.masterdetail.ui.postdetail.PostDetailFragment"
         android:label="@string/post_detail"
         tools:layout="@layout/fragment_post_detail" >
         <argument
