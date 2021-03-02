@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import co.ravn.kevin.masterdetail.R
 import co.ravn.kevin.masterdetail.databinding.FragmentPostDetailsBinding
 import co.ravn.kevin.masterdetail.model.Result
+import co.ravn.kevin.masterdetail.ui.utils.SpacingItemDecorator
 import co.ravn.kevin.masterdetail.utils.gone
 import co.ravn.kevin.masterdetail.utils.toast
 import co.ravn.kevin.masterdetail.utils.visible
@@ -40,10 +42,12 @@ class PostDetailsFragment : Fragment() {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.commentsList.adapter = adapter
-        binding.commentsList.layoutManager = LinearLayoutManager(requireContext())
-        binding.commentsList.isNestedScrollingEnabled = false
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
+        commentsList.adapter = adapter
+        commentsList.layoutManager = LinearLayoutManager(requireContext())
+        val spacing = requireContext().resources.getDimensionPixelSize(R.dimen.padding_standard)
+        commentsList.addItemDecoration(SpacingItemDecorator(spacing))
+        commentsList.isNestedScrollingEnabled = false
         getPostDetails(args.postId)
     }
 
